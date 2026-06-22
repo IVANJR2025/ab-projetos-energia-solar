@@ -17,6 +17,7 @@
         <img src="assets/images/Logo_AB_01.png" alt="AB Projetos Energia Solar" />
       </a>
       <ul class="navbar__links">
+        <li><a href="#simulador">Simulador</a></li>
         <li><a href="pages/servicos.html">Serviços</a></li>
         <li><a href="pages/instalacoes.html">Instalações</a></li>
         <li><a href="pages/sobre.html">Sobre</a></li>
@@ -80,6 +81,50 @@
         <div class="stat-item">
           <span class="stat-item__value" data-target="98%">98%</span>
           <span class="stat-item__label">Clientes satisfeitos</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIMULADOR DE ECONOMIA -->
+<section class="section section--surface" id="simulador">
+    <div class="container">
+      <div class="section__header" style="text-align:center;">
+        <span class="section__eyebrow">Simulador Gratuito</span>
+        <h2 class="section__title">Quanto você pode economizar?</h2>
+        <p class="section__subtitle" style="margin:0 auto;">Informe o valor médio da sua conta de luz e descubra em segundos sua economia estimada com energia solar.</p>
+      </div>
+  
+      <div style="max-width:600px;margin:var(--space-12) auto 0;">
+        <div style="background:var(--color-dark-bg);border:1px solid var(--color-dark-border);border-radius:var(--radius-lg);padding:var(--space-12);position:relative;overflow:hidden;">
+          <div style="position:absolute;top:-80px;right:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(245,166,35,0.10) 0%,transparent 70%);pointer-events:none;"></div>
+  
+          <label style="display:block;font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-3);font-weight:600;">Valor médio da sua conta de luz (R$)</label>
+  
+          <div style="display:flex;gap:var(--space-3);margin-bottom:var(--space-8);position:relative;">
+            <input type="number" id="contaInput" placeholder="Ex: 450" style="flex:1;padding:var(--space-4) var(--space-5);border-radius:var(--radius-md);border:1px solid var(--color-dark-border);background:var(--color-dark-surface);color:#fff;font-size:var(--text-lg);font-weight:600;outline:none;" />
+            <button onclick="calcularEconomia()" class="btn btn--primary" style="white-space:nowrap;">Calcular</button>
+          </div>
+  
+          <div id="resultadoSimulador" style="display:none;position:relative;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin-bottom:var(--space-6);">
+              <div style="background:var(--color-dark-surface);border:1px solid var(--color-dark-border);border-radius:var(--radius-md);padding:var(--space-5);text-align:center;">
+                <div style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:900;color:var(--color-yellow);" id="economiaMensal">R$ 0</div>
+                <div style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:4px;">Economia mensal estimada</div>
+              </div>
+              <div style="background:var(--color-dark-surface);border:1px solid var(--color-dark-border);border-radius:var(--radius-md);padding:var(--space-5);text-align:center;">
+                <div style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:900;color:var(--color-yellow);" id="economiaAnual">R$ 0</div>
+                <div style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:4px;">Economia anual estimada</div>
+              </div>
+            </div>
+            <div style="background:var(--color-yellow-glow);border:1px solid var(--color-yellow);border-radius:var(--radius-md);padding:var(--space-5);text-align:center;margin-bottom:var(--space-6);">
+              <div style="font-size:var(--text-sm);color:var(--color-text-light);">Tempo estimado de retorno do investimento</div>
+              <div style="font-family:var(--font-display);font-size:var(--text-3xl);font-weight:900;color:var(--color-yellow);margin-top:4px;" id="paybackTempo">0 anos</div>
+            </div>
+            <a id="ctaWhatsapp" href="#" target="_blank" class="btn btn--primary" style="width:100%;justify-content:center;">💬 Fale Conosco</a>
+          </div>
+  
+          <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-4);text-align:center;position:relative;">*Valores estimados. A simulação exata depende de fatores técnicos avaliados na visita gratuita.</p>
         </div>
       </div>
     </div>
@@ -256,6 +301,29 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    function calcularEconomia() {
+      const conta = parseFloat(document.getElementById('contaInput').value);
+      if (!conta || conta <= 0) {
+        alert('Por favor, informe um valor válido da sua conta de luz.');
+        return;
+      }
+    
+      const economiaMensal = conta * 0.85;
+      const economiaAnual = economiaMensal * 12;
+      const investimentoEstimado = conta * 38;
+      const paybackAnos = (investimentoEstimado / economiaAnual).toFixed(1);
+    
+      document.getElementById('economiaMensal').textContent =
+        'R$ ' + economiaMensal.toLocaleString('pt-BR', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+      document.getElementById('economiaAnual').textContent =
+        'R$ ' + economiaAnual.toLocaleString('pt-BR', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+      document.getElementById('paybackTempo').textContent = paybackAnos + ' anos';
+    
+      document.getElementById('resultadoSimulador').style.display = 'block';
+    }
+    </script>
 
   <script src="assets/js/main.js"></script>
 </body>
